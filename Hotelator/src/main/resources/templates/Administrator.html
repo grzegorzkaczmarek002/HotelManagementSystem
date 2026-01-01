@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Aplikacja</title>
+    <link th:href="@{/main.css}" rel="stylesheet" />
+</head>
+<body class="ciało1">
+<header class="nagłówek">
+    <h1 > <a href="/" th:href="@{/aplikacja1(idpr=${pracownik.idPracownik})}"><img class="logo1" src="Logo.png"  style = "float:left"  ></a> </h1>
+    <ol>
+        <li>
+            <img accesskey="0"  th:text="${pracownik.login}" th:if="${pracownik.osoba.płeć} == 'Męzczyzna'" class="obraz" src="male.png">
+            <img accesskey="0" th:text="${pracownik.login}" th:if="${pracownik.osoba.płeć} == 'Kobieta'" class="obraz" src="woman.png">
+
+
+
+            <ul>
+                <li>Stanowisko: <p th:text="${pracownik.stanowisko}"></p></li>
+                <li><a accesskey=")" href="/" th:href="@{/wylogowanie(idpr=${pracownik.idPracownik})}" >Wyloguj się</a></li>
+            </ul>
+        </li>
+    </ol>
+    <br><br><br><br>
+</header>
+<form  action="/pracownicy" th:action="@{/pracownicy(idpr=${pracownik.idPracownik})}" method="post">
+    <h2 class="formularz_zamówienia">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <p class="punkt"></p>
+        <input accesskey="1" type="submit" class="wybor" value="Zarządzaj pracownikami" />
+    </h2>
+</form>
+<form  action="/klienci" th:action="@{/klienci(idpr=${pracownik.idPracownik})}" method="post">
+    <br>
+    <h2 class="formularz_zamówienia">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <p class="punkt"></p>
+        <input accesskey="2" type="submit" class="wybor" value="Zarządzaj klientami" />
+    </h2>
+</form>
+<form  action="/rezerwacje" th:action="@{/rezerwacje(idpr=${pracownik.idPracownik})}"  method="post">
+    <br>
+    <h2 class="formularz_zamówienia">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <p class="punkt"></p>
+        <input accesskey="3" type="submit" class="wybor" value="Zarządzaj rezerwacjami" />
+    </h2>
+</form>
+<form  action="/pokoje" th:action="@{/pokoje(idpr=${pracownik.idPracownik})}"  method="post">
+    <br>
+    <h2 class="formularz_zamówienia">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <p class="punkt"></p>
+        <input accesskey="4" type="submit" class="wybor" value="Zarządzaj pokojami" />
+    </h2>
+</form>
+<form  action="/stawki" th:action="@{/stawki(idpr=${pracownik.idPracownik})}" method="post">
+    <br>
+    <h2 class="formularz_zamówienia">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <p class="punkt"></p>
+        <input accesskey="5" type="submit" class="wybor" value="Zarządzaj stawkami" />
+    </h2>
+</form>
+</body>
+</html>

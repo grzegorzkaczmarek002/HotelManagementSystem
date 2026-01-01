@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Pracownicy</title>
+    <link th:href="@{/main.css}" rel="stylesheet" />
+</head>
+<body class="ciało2">
+<header class="nagłówek">
+    <h1 > <a href="/" th:href="@{/aplikacja1(idpr=${pracownik.idPracownik})}"><img class="logo2" src="Logo.png"  style = "float:left"  ></a> </h1>
+    <ol >
+        <li >
+            <img accesskey="0"  th:text="${pracownik.login}" th:if="${pracownik.osoba.płeć} == 'Męzczyzna'" class="obraz" src="male.png">
+            <img accesskey="0" th:text="${pracownik.login}" th:if="${pracownik.osoba.płeć} == 'Kobieta'" class="obraz" src="woman.png">
+
+
+
+            <ul >
+                <li >Stanowisko: <p th:text="${pracownik.stanowisko}"></p></li>
+                <li><a accesskey=")" href="/" th:href="@{/wylogowanie(idpr=${pracownik.idPracownik})}" >Wyloguj się</a></li>
+            </ul>
+        </li>
+    </ol>
+    <br><br><br><br>
+</header>
+<h1 th:if="${błąd} == '1'">Nie ma pracownika o takim id</h1>
+<table>
+<tr >
+    <td style="background:green">
+    <a accesskey="1"  href="/pracownicy" th:href="@{/dodajpracownika(idpr=${pracownik.idPracownik})}" >
+
+        <i  ></i><strong> Dodaj </strong></a></td>
+    <td style="background:red">
+    <form  action="/pracownicy" th:action="@{/wyszukajpracownika(idpr=${pracownik.idPracownik})}"method="post" >
+        <label class="label1"><strong>Znajdź po peselu:</strong></label>
+        <p class="punkt"></p>
+        <input accesskey="2"  title="Wpisz pesel" class="wybor1"  type="text"  name="pesel" pattern="\d{11}"   maxlength="11"  placeholder="00000000000" required>
+        <p class="punkt"></p>
+        <strong>
+    <input accesskey="3" type="submit" class="wybor" value="Wyszukaj" />
+        </strong>
+    </form>
+    </td>
+
+</tr>
+</table>
+<br><br>
+<p align="center"> <h2 style="font-size:200%">Lista pracowników</h2></p> <br>
+<table >
+    <tr><th>Id</th><th>Login</th> <th>Imię</th><th>Nazwisko</th><th>Płeć</th><th>E-mail</th><th>Numer telefonu<th>Miejscowość</th><th>Ulica<th>Nr domu</th><th>Nr mieszkania</th><th>Kod pocztowy</th><th>Kraj</th><th>Data urodzenia</th><th>Stanowisko</th></tr>
+    <tr  th:each="pracownik1: ${pracownicy}">
+        <td th:text="${pracownik1.idPracownik}"></td>
+        <td th:text="${pracownik1.login}"></td>
+        <td th:text="${pracownik1.osoba.imię}"></td>
+        <td th:text="${pracownik1.osoba.nazwisko}"></td>
+        <td th:text="${pracownik1.osoba.płeć}"></td>
+        <td th:text="${pracownik1.osoba.e_mail}"></td>
+        <td th:text="${pracownik1.osoba.nr_telefonu}"></td>
+        <td th:text="${pracownik1.osoba.adres.miejscowość}"></td>
+        <td th:text="${pracownik1.osoba.adres.ulica}"></td>
+        <td th:text="${pracownik1.osoba.adres.nr_domu}"></td>
+        <td th:text="${pracownik1.osoba.adres.nr_mieszkania}"></td>
+        <td th:text="${pracownik1.osoba.adres.kod_pocztowy}"></td>
+        <td th:text="${pracownik1.osoba.adres.kraj}"></td>
+        <td th:text="${pracownik1.osoba.data_urodzenia}"></td>
+        <td th:text="${pracownik1.stanowisko}"></td>
+        <td th:unless="${pracownik1.idPracownik} == ${pracownik.idPracownik} or ${pracownik1.stanowisko} == 'Administrator' or ${pracownik1.stanowisko} == 'Administratorka'" style="background:red">
+            <a  href="/pracownicy" th:href="@{/kasujpracownika(idpr=${pracownik.idPracownik},idpr1  = ${pracownik1.idPracownik})}" >
+
+                <i  ></i><strong> Kasuj </strong></a></td>
+
+        <td th:unless="${pracownik1.idPracownik} == ${pracownik.idPracownik} or ${pracownik1.stanowisko} == 'Administrator' or ${pracownik1.stanowisko} == 'Administratorka'"   style="background:green" >
+            <a  href="/pracownicy" th:href="@{/aktualizujpracownika(idpr=${pracownik.idPracownik}, idpr1 = ${pracownik1.idPracownik})}" >
+
+                <i ></i><strong>Aktualizuj</strong></a></td>
+
+
+    </tr>
+</table>
+
+</body>
+</html>

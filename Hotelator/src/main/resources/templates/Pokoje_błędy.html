@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pokoje</title>
+    <link th:href="@{/main.css}" rel="stylesheet" />
+</head>
+<body class="ciało2">
+<header class="nagłówek">
+    <h1 > <a href="/" th:href="@{/aplikacja1(idpr=${pracownik.idPracownik})}"><img class="logo2" src="Logo.png"  style = "float:left"  ></a> </h1>
+    <ol >
+        <li >
+            <img accesskey="0"  th:text="${pracownik.login}" th:if="${pracownik.osoba.płeć} == 'Męzczyzna'" class="obraz" src="male.png">
+            <img accesskey="0" th:text="${pracownik.login}" th:if="${pracownik.osoba.płeć} == 'Kobieta'" class="obraz" src="woman.png">
+
+
+
+            <ul >
+                <li >Stanowisko: <p th:text="${pracownik.stanowisko}"></p></li>
+                <li><a accesskey=")" href="/" th:href="@{/wylogowanie(idpr=${pracownik.idPracownik})}" >Wyloguj się</a></li>
+            </ul>
+        </li>
+    </ol>
+    <br><br><br><br>
+</header>
+<h1 th:if="${błąd} == '1'">Nie ma takiego id rezerwacji</h1>
+<table>
+    <tr >
+        <td style="background:green">
+            <a accesskey="1"  href="/pokoje" th:href="@{/dodajpokój(idpr=${pracownik.idPracownik})}" >
+
+                <i  ></i><strong> Dodaj </strong></a></td>
+        </form>
+        <td style="background:red">
+            <form  action="/pokoje" th:action="@{/wyszukajpokój(idpr=${pracownik.idPracownik})}"method="post" >
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <label class="label1"><strong>Znajdź po id rezerwacji:</strong></label>
+                <p class="punkt"></p>
+                <input accesskey="2"  title="Wpisz id rezerwacji" class="wybor1"  type="text"  name="idr"    maxlength="4"   required>
+                <p class="punkt"></p>
+                <strong>
+                    <input accesskey="3" type="submit" class="wybor" value="Wyszukaj" />
+                </strong>
+            </form>
+
+    </tr>
+</table>
+<br><br>
+<p align="center"> <h2 style="font-size:200%">Lista pokoi</h2></p> <br>
+<table >
+    <tr><th>Id</th><th>Numer pokoju<th>Cena za osobę</th><th>Balkon<th>Miejsc na dodatkowe łóżka</th><th>Miejsc dla osób</th><th>Maksymalne miejsce</th><th>Opis</th><th>Status</th><th>Id rezerwacji</th></tr>
+    <tr  th:each="pokój: ${pokoje}">
+        <td th:text="${pokój.idPokój}"></td>
+        <td th:text="${pokój.numerpokoju}"></td>
+        <td th:text="${pokój.cena}"></td>
+        <td th:text="${pokój.balkon}"></td>
+        <td th:text="${pokój.extra_łóżko}"></td>
+        <td th:text="${pokój.miejsce}"></td>
+        <td th:text="${pokój.max_miejsce}"></td>
+        <td th:text="${pokój.opis}"></td>
+        <td th:text="${pokój.status}"></td>
+        <td th:text="${pokój.rezerwacje}"></td>
+        </td>
+        <td th:if="${pokój.status} == 'Wolny'" style="background:red">
+            <a  href="/pokoje" th:href="@{/kasujpokój(idpr=${pracownik.idPracownik},idp  = ${pokój.idPokój})}" >
+
+                <i  ></i><strong> Kasuj </strong></a></td>
+
+        <td style="background:green" >
+            <a  href="/pokoje" th:href="@{/aktualizujpokój(idpr=${pracownik.idPracownik}, idp = ${pokój.idPokój})}" >
+
+                <i ></i><strong>Aktualizuj</strong></a></td>
+    </tr>
+</table>
+
+</body>
+</html>

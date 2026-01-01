@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Dodaj Rezerwację</title>
+  <link th:href="@{/main.css}" rel="stylesheet" />
+</head>
+<body class="ciało">
+<header class="nagłówek">
+  <h1 > <a href="/" th:href="@{/aplikacja1(idpr=${pracownik.idPracownik})}"><img class="logo1" src="Logo.png"  style = "float:left"  ></a> </h1>
+
+  <br><br><br><br>
+</header>
+<h1 th:if="${błąd} == '1'">Za duża liczba osób</h1>
+<h1 th:if="${błąd} == '2'">Musi być chociaż jeden dorosły</h1>
+<form  action="dodajrezerwacje" th:action="@{/dodrezer(idpr = ${pracownik.idPracownik}, idr = ${rezerwacja.idRezerwacja},lp = ${pokoje})}" method="post">
+  <br>
+  <h2 class="formularz_zamówienia">Podaj dane
+    <label class="label1">Pokój:</label>
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <p class="punkt"></p>
+    <select   accesskey="1" class="wybor"    name="numer" required>
+      <option th:each="pokój: ${pokoje}" th:value="${pokój.numer_pokoju}" th:text="'Nr. ' + ${pokój.numerpokoju} + ' miejsce: ' + ${pokój.miejsce}+ ' max: ' + ${pokój.max_miejsce}   "> </option>
+    </select>
+
+
+    <p class="punkt"></p>
+    <label class="label1">Liczba dorosłych:</label>
+    <p class="punkt"></p>
+    <input accesskey="2"  title="Wpisz liczbę dorosłych"  class="wybor"  type="text"  name="liczba_dorosłych"pattern="[0-9]{,2}" maxlength="2" required  >
+    <p class="punkt"></p>
+    <label class="label1">Liczba dzieci:</label>
+    <p class="punkt"></p>
+    <input accesskey="3"  title="Wpisz liczbę dzieci"  class="wybor"  type="text"  name="liczba_dzieci"pattern="[0-9]{,2}" maxlength="2" required  >
+    <p class="punkt"></p>
+    <input accesskey="-" type="submit" class="wybor" value="Zakończ rezerwacje" />
+    <input type="reset" value="reset">
+  </h2>
+</form>
+
+</body>
+</html>

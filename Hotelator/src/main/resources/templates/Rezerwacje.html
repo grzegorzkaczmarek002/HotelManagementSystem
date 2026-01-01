@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rezerwacje</title>
+    <link th:href="@{/main.css}" rel="stylesheet" />
+</head>
+<body class="ciało2">
+<header class="nagłówek">
+    <h1 > <a href="/" th:href="@{/aplikacja1(idpr=${pracownik.idPracownik})}"><img class="logo2" src="Logo.png"  style = "float:left"  ></a> </h1>
+    <ol >
+        <li >
+            <img accesskey="0"  th:text="${pracownik.login}" th:if="${pracownik.osoba.płeć} == 'Męzczyzna'" class="obraz" src="male.png">
+            <img accesskey="0" th:text="${pracownik.login}" th:if="${pracownik.osoba.płeć} == 'Kobieta'" class="obraz" src="woman.png">
+
+
+
+            <ul >
+                <li >Stanowisko: <p th:text="${pracownik.stanowisko}"></p></li>
+                <li><a accesskey=")" href="/" th:href="@{/wylogowanie(idpr=${pracownik.idPracownik})}" >Wyloguj się</a></li>
+            </ul>
+        </li>
+    </ol>
+    <br><br><br><br>
+</header>
+<table>
+    <tr >
+        <td style="background:green">
+            <form  action="/rezerwacje" th:action="@{/dodajrezerwacje(idpr=${pracownik.idPracownik})}"method="post" >
+                <label class="label1"><strong>Podaj id  klienta:</strong></label>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <p class="punkt"></p>
+                <input accesskey="1"  title="Wpisz id klienta" class="wybor1"  type="text"  name="idk" pattern="\d"   maxlength="4"   required>
+                <p class="punkt"></p>
+                <strong>
+                    <input accesskey="2" type="submit" class="wybor" value="Dodaj Rezerwacje" />
+                </strong>
+            </form>
+        <td style="background:red">
+            <form  action="/rezerwacje" th:action="@{/wyszukajrez(idpr=${pracownik.idPracownik})}"method="post" >
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <label class="label1"><strong>Znajdź po id klienta:</strong></label>
+                <p class="punkt"></p>
+                <input accesskey="3"  title="Wpisz id klienta" class="wybor1"  type="text"  name="idk"    maxlength="4"   required>
+                <p class="punkt"></p>
+                <strong>
+                    <input accesskey="4" type="submit" class="wybor" value="Wyszukaj" />
+                </strong>
+            </form>
+        </td>
+
+    </tr>
+</table>
+<br><br>
+<p align="center"> <h2 style="font-size:200%">Lista rezerwacji</h2></p> <br>
+<table >
+    <tr><th>Id</th> <th>Id Klienta</th><th>Od</th><th>Do</th><th>Liczba dorosłych</th><th>Liczba dzieci</th><th>Liczba extra osób<th>Liczba extra łóżek</th><th>Godzina przyjazdu<th>Koszt za dobę</th><th>Id Stawki</th><th>Id Pokoi</th><th>Status</th></tr>
+    <tr  th:each="rezerwacja: ${rezerwacje}">
+        <td th:text="${rezerwacja.idRezerwacja}"></td>
+        <td th:text="${rezerwacja.klient}"></td>
+        <td th:text="${rezerwacja.od}"></td>
+        <td th:text="${rezerwacja.doo}"></td>
+        <td th:text="${rezerwacja.liczba_dorosłych}"></td>
+        <td th:text="${rezerwacja.liczba_dzieci}"></td>
+        <td th:text="${rezerwacja.liczba_extra_osób}"></td>
+        <td th:text="${rezerwacja.liczba_extra_łóżek}"></td>
+        <td th:text="${rezerwacja.godzina_przyjazdu}"></td>
+        <td th:text="${rezerwacja.koszt}"></td>
+        <td th:text="${rezerwacja.stawka}"></td>
+        <td th:text="${rezerwacja.pokoje}"></td>
+        <td th:text="${rezerwacja.status}"></td>
+        <td style="background:red">
+            <a  href="/rezerwacje" th:href="@{/kasujrezerwacje(idpr=${pracownik.idPracownik},idr  = ${rezerwacja.idRezerwacja})}" >
+
+                <i  ></i><strong> Kasuj </strong></a></td>
+
+        <td style="background:green" >
+            <a  href="/rezerwacje" th:href="@{/aktualizujrezerwacje(idpr=${pracownik.idPracownik}, idr = ${rezerwacja.idRezerwacja})}" >
+
+                <i ></i><strong>Aktualizuj</strong></a></td>
+        <td style="background:orange" >
+            <a  href="/rezerwacje" th:href="@{/kolejny_pokój1(idpr=${pracownik.idPracownik}, idr = ${rezerwacja.idRezerwacja})}" >
+
+                <i ></i><strong>Dodaj pokój</strong></a></td>
+
+    <form  action="/rezerwacje" th:action="@{/zmień_statusr(idpr=${pracownik.idPracownik}, idr = ${rezerwacja.idRezerwacja})}" method="post">
+   <td th:unless="${rezerwacja.status} == 'Zakończona'" style="background:pink">
+       <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <strong>
+       <select  class="wybor"    name="status" >
+        <option th:if="${rezerwacja.status} == 'Oczekująca'" value="T">Trwająca</option>
+        <option th:if="${rezerwacja.status} == 'Trwająca'"   value="Z">Zakończona </option>
+    </select>
+        <input  type="submit" class="wybor" value="Zmień status" />
+    </strong>
+    </form>
+    </td>
+</tr>
+</table>
+
+</body>
+</html>

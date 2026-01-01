@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dodaj Rezerwację</title>
+    <link th:href="@{/main.css}" rel="stylesheet" />
+</head>
+<body class="ciało1">
+<header class="nagłówek">
+    <h1 > <a href="/" th:href="@{/aplikacja1(idpr=${pracownik.idPracownik})}"><img class="logo1" src="Logo.png"  style = "float:left"  ></a> </h1>
+
+    <br><br><br><br>
+</header>
+<h1 th:if="${błąd} == '1'">Brak wolnych pokoi</h1>
+<form  action="/rezerwacje" th:action="@{/kolejny_pokój(idpr=${pracownik.idPracownik},idr = ${rezerwacja.idRezerwacja})}" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <h2 class="formularz_zamówienia">
+        <p class="punkt"></p>
+        <input accesskey="1" type="submit" class="wybor" value="Dodaj kolejny pokój" />
+    </h2>
+</form>
+<form  action="/rezerwacje" th:action="@{/koniec_rezerwacji(idpr=${pracownik.idPracownik},idr = ${rezerwacja.idRezerwacja})}"  method="post">
+    <br>
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <h2 class="formularz_zamówienia">
+        <p class="punkt"></p>
+        <input accesskey="2" type="submit" class="wybor" value="Zakończ rezerwacje" />
+    </h2>
+</form>
+
+
+</body>
+</html>
