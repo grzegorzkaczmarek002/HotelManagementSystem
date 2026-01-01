@@ -2,10 +2,14 @@ package Projekt.Hotelator;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.server.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -120,11 +124,17 @@ Model model)
             }
             for (Pracownik pracownik : pracownikRepo.findAll()) {
 
-                if (pracownik.getLogin().equals(login) && this.passwordEncoder.matches(hasło,pracownik.getHasło()) ) {
+                if (pracownik.getLogin().equals(login) && this.passwordEncoder.matches(hasło, pracownik.getHasło())) {
+
                     String opis = "Pracownik o loginie " + pracownik.getLogin() + " zalogował się";
                     Log log = new Log("Pracownik", "Logowanie", opis);
                     logRepo.save(log);
-
+                    Authentication auth = new UsernamePasswordAuthenticationToken(
+                            login,
+                            null,
+                            AuthorityUtils.createAuthorityList("ROLE_" + pracownik.getStanowisko().toUpperCase())
+                    );
+                    SecurityContextHolder.getContext().setAuthentication(auth);
                     if (pracownik.getOsoba().getPłeć().equals("Męzczyzna")) {
                         pracownik.setStatus("Zalogowany");
                     }
