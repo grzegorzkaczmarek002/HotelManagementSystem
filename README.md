@@ -31,7 +31,7 @@ System jest oparty na architekturze **MVC (Model-View-Controller)**:
 ## Projekt zabezpieczeń:
 - **Logowanie za pomocą loginu i hasła**: System weryfikuje dane użytkownika, sprawdzając ich zgodność z danymi w bazie danych.
 - **Role i uprawnienia**: Każdy pracownik ma przypisaną rolę, która określa jego dostęp do funkcji aplikacji.
-- **Mechanizm blokady konta**: Po 5 próbach nieudanych próbach konto jest czasowo blokowane na 15 minut, co chroni przed atakami typu bruce-force.
+- **Mechanizm blokady konta**: Po 5 nieudanych próbach konto jest czasowo blokowane na 15 minut, co chroni przed atakami typu brute-force.
 - **Szyfrowanie danych**: Pesel i hasła są szyfrowane za pomocą algorytmu BCrypt.
 - **Ochrona przed SQL Injection**: Operacje na bazie danych są realizowane za pomocą zapytań przygotowanych w Spring Data JPA, co eliminuje możliwość wstrzykiwania niebezpiecznego kodu SQL.
 - **Ochrona przed Cross-Site Scripting**: Dane wprowadzone przez użytkowników są sprawdzane przed zapisaniem lub wyświetleniem oraz mechanizmy wbudowane w Thymeleaf pomagają w kodowaniu wyjścia w HTML.
