@@ -1,6 +1,6 @@
 # Hotel Management System - Projekt Inżynierski
 
-## Uruhamianie:
+## Uruchamianie:
 Aplikacja domyślnie uruchamia się na porcie 9090. Adres lokalny: http://localhost:9090
 ## Opis projektu:
 Aplikacja bazodanowa do zarządzania hotelem.
@@ -30,13 +30,13 @@ System jest oparty na architekturze MVC:
 ## Projekt zabezpieczeń:
 - Logowanie za pomocą loginu i hasła: System weryfikuje dane użytkownika, sprawdzając ich zgodność z danymi w bazie danych.
 - Role i uprawnienia: Każdy pracownik ma przypisaną rolę, która określa jego dostęp do funkcji aplikacji.
-- Mechanizm blokady konta: Po 5 próbach nieudanych próbach konto jest czasowo blokowane na 15 minut, co chroni przed atakami typu bruce force.
+- Mechanizm blokady konta: Po 5 próbach nieudanych próbach konto jest czasowo blokowane na 15 minut, co chroni przed atakami typu bruce-force.
 - Szyfrowanie danych: Pesel i hasła są szyfrowane za pomocą algorytmu BCrypt.
 - Ochrona przed SQL Injection : Operacje na bazie danych są realizowane za pomocą zapytań przygotowanych w Spring Data JPA, co eliminuje możliwość wstrzykiwania niebezpiecznego kodu SQL.
 - Ochrona przed Cross-Site Scripting: Dane wprowadzone przez użytkowników są sprawdzane przed zapisaniem lub wyświetleniem oraz mechanizmy wbudowane w Thymeleaf pomagają w kodowaniu wyjścia w HTML.
 - Ochrona Cross-Site Request Forgery (CSRF): Mechanizm CSRF jest domyślnie aktywowany w Spring Security.
 - System logów: Każda operacja w systemie jest rejestrowana w tabeli Logi.
-- Silne hasła: Hasła muszą mieć długość minimum 8 znaków oraz zawierać 1 dużą liczbę, małą liczbę, cyfrę i znak specjalny.
+- Silne hasła: Hasła muszą mieć długość minimum 8 znaków oraz zawierać 1 dużą literę, małą literę, cyfrę i znak specjalny.
   
 ## Użyte technologie
 - Java
@@ -46,7 +46,6 @@ System jest oparty na architekturze MVC:
 - Spring Data JPA
 - Thymeleaf
 - Maven
-- MySQL
 - MySQL
 - HTML
 - CSS
